@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import Auth from "../Pages/Auth";
-import Dashboard from "../Pages/Dashboard";
+import Auth from "../../Pages/Auth";
+import Dashboard from "../../Pages/Dashboard";
 import "./App.css";
 import Layout from "../Layout";
 

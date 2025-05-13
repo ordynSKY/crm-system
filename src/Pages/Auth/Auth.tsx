@@ -1,5 +1,45 @@
-const Auth = () => {
-	return <div>Auth</div>;
+
+import { Button, TextField, Box, Typography } from '@mui/material';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+type SignInFormData = {
+  email: string;
+  password: string;
 };
 
-export default Auth;
+const SignInPage = () => {
+  const { register, handleSubmit } = useForm<SignInFormData>();
+  let navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<SignInFormData> = async (data: any) => {
+    try {
+    //   const response = await fetch('/api/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    //   });
+
+    //   if (!response.ok) throw new Error('Invalid credentials');
+    //   const result = await response.json();
+
+      localStorage.setItem('token', "admin_user");
+      navigate("/")
+    } catch (err) {
+      alert('Ошибка авторизации');
+    }
+  };
+
+  return (
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: 300, margin: '100px auto' }}>
+      <Typography variant="h5">Вход</Typography>
+      <TextField label="Email" {...register('email')} type="email" required />
+      <TextField label="Пароль" {...register('password')} type="password" required />
+      <Button type="submit" variant="contained">Войти</Button>
+    </Box>
+  );
+};
+
+export default SignInPage;

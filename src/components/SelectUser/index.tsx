@@ -36,6 +36,9 @@ const SelectUser = () => {
         Users
       </InputLabel>
       <Select
+        sx={{
+          borderRadius: '.5rem',
+        }}
         // labelId="demo-simple-select-label"
         // id="demo-simple-select"
         value={user}

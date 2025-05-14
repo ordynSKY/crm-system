@@ -17,8 +17,9 @@ const DashboardHeader = () => {
       <Typography
         variant="h2"
         sx={{
-          fontWeight: '900',
+          fontWeight: '600',
           textTransform: 'capitalize',
+          fontSize: '2.25rem',
         }}
       >
         dashboard

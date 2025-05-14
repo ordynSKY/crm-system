@@ -1,7 +1,69 @@
 import { Box, Container } from '@mui/material';
 import DashboardHeader from '../../components/DashboardHeader';
+import { Charts } from '../../components/Charts';
+import RecentTransactionsTable from '../../components/RecentTransactions';
+import { useState } from 'react';
+
+type SplitItem = {
+  category: string;
+  amount: number;
+};
+
+type Transaction = {
+  amount: number;
+  date: string;
+  notes: string;
+  split: SplitItem[];
+};
 
 const Dashboard = () => {
+  const [transactions, setTransactions] = useState([
+    {
+      amount: 10000,
+      date: '2025-05-13',
+      notes: 'Запуск связки TikTok',
+      split: [
+        { category: 'TikTok Ads', amount: 7000 },
+        { category: 'Proxy', amount: 2000 },
+        { category: 'Акки', amount: 1000 },
+      ],
+    },
+    {
+      amount: 5000,
+      date: '2025-05-12',
+      notes: 'Обновление креативов',
+      split: [
+        { category: 'Дизайн', amount: 3000 },
+        { category: 'FB Ads', amount: 2000 },
+      ],
+    },
+    {
+      amount: 5000,
+      date: '2025-05-12',
+      notes: 'Обновление креативов',
+      split: [
+        { category: 'Дизайн', amount: 3000 },
+        { category: 'FB Ads', amount: 2000 },
+      ],
+    },
+    {
+      amount: 5000,
+      date: '2025-05-12',
+      notes: 'Обновление креативов',
+      split: [
+        { category: 'Дизайн', amount: 3000 },
+        { category: 'FB Ads', amount: 2000 },
+      ],
+    },
+  ]);
+  const handleUpdateTransaction = (
+    index: number,
+    updatedTransaction: Transaction
+  ) => {
+    const newTransactions = [...transactions];
+    newTransactions[index] = updatedTransaction;
+    setTransactions(newTransactions);
+  };
   return (
     <Container
       maxWidth="xl"
@@ -94,6 +156,31 @@ const Dashboard = () => {
           >
             Пункт 4
           </Box>
+        </Box>
+      </Box>
+      <Box display="flex" height="400px">
+        <Box
+          width="50%"
+          border="2px solid #dcd9d9"
+          borderRadius="5px"
+          padding="10px"
+          marginTop="20px"
+          marginRight="10px"
+        >
+          <Charts />
+        </Box>
+        <Box
+          width="50%"
+          border="2px solid #dcd9d9"
+          borderRadius="5px"
+          padding="10px"
+          marginTop="20px"
+          overflow="auto"
+        >
+          <RecentTransactionsTable
+            transactions={transactions}
+            onUpdateTransaction={handleUpdateTransaction}
+          />
         </Box>
       </Box>
     </Container>

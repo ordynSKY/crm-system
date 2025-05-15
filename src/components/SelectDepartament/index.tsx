@@ -7,18 +7,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 
-const departments = [
-  'Department 1',
-  'Department 2',
-  'Department 3',
-  'Department 4',
-  'Department 5',
-  'Department 6',
-  'Department 7',
-  'Department 8',
-  'Department 9',
-  'Department 10',
-];
+const departments = ['Finance', 'Tech', 'YouTube', 'Farm', 'Buyers'];
 
 const SelectDepartament = () => {
   const [department, setDepartment] = useState('');

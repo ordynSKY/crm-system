@@ -18,12 +18,14 @@ const SelectDate = () => {
         <DatePicker
           label="Від"
           value={fromDate}
+          format="DD/MM/YYYY"
           onChange={newValue => setFromDate(newValue)}
           slotProps={{ textField: { fullWidth: true } }}
         />
         <DatePicker
           label="До"
           value={toDate}
+          format="DD/MM/YYYY"
           onChange={newValue => setToDate(newValue)}
           minDate={fromDate || undefined}
           slotProps={{ textField: { fullWidth: true } }}

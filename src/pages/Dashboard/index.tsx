@@ -3,67 +3,11 @@ import DashboardHeader from '../../components/DashboardHeader';
 import { Charts } from '../../components/Charts';
 import RecentTransactionsTable from '../../components/RecentTransactions';
 import { useState } from 'react';
-
-type SplitItem = {
-  category: string;
-  amount: number;
-};
-
-type Transaction = {
-  amount: number;
-  date: string;
-  notes: string;
-  split: SplitItem[];
-};
+import CreateTransactionForm from '../../components/CreateTransactionForm';
 
 const Dashboard = () => {
-  const [transactions, setTransactions] = useState([
-    {
-      amount: 10000,
-      date: '2025-05-13',
-      notes: 'Запуск связки TikTok',
-      split: [
-        { category: 'TikTok Ads', amount: 7000 },
-        { category: 'Proxy', amount: 2000 },
-        { category: 'Акки', amount: 1000 },
-      ],
-    },
-    {
-      amount: 5000,
-      date: '2025-05-12',
-      notes: 'Обновление креативов',
-      split: [
-        { category: 'Дизайн', amount: 3000 },
-        { category: 'FB Ads', amount: 2000 },
-      ],
-    },
-    {
-      amount: 5000,
-      date: '2025-05-12',
-      notes: 'Обновление креативов',
-      split: [
-        { category: 'Дизайн', amount: 3000 },
-        { category: 'FB Ads', amount: 2000 },
-      ],
-    },
-    {
-      amount: 5000,
-      date: '2025-05-12',
-      notes: 'Обновление креативов',
-      split: [
-        { category: 'Дизайн', amount: 3000 },
-        { category: 'FB Ads', amount: 2000 },
-      ],
-    },
-  ]);
-  const handleUpdateTransaction = (
-    index: number,
-    updatedTransaction: Transaction
-  ) => {
-    const newTransactions = [...transactions];
-    newTransactions[index] = updatedTransaction;
-    setTransactions(newTransactions);
-  };
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   return (
     <Container
       maxWidth="xl"
@@ -109,7 +53,12 @@ const Dashboard = () => {
               backgroundColor: '#689CD0',
             }}
           >
-            Пункт 1
+            <button
+              className="create-button"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              Создать транзакцию
+            </button>
           </Box>
           <Box
             component="li"
@@ -177,9 +126,10 @@ const Dashboard = () => {
           marginTop="20px"
           overflow="auto"
         >
-          <RecentTransactionsTable
-            transactions={transactions}
-            onUpdateTransaction={handleUpdateTransaction}
+          <RecentTransactionsTable />
+          <CreateTransactionForm
+            isOpen={isCreateModalOpen}
+            onClose={() => setIsCreateModalOpen(false)}
           />
         </Box>
       </Box>

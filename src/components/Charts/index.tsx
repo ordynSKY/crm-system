@@ -10,10 +10,10 @@ import {
 } from 'recharts';
 
 const data = [
-  { name: 'Янв', expenses: 400 },
-  { name: 'Фев', expenses: 300 },
-  { name: 'Мар', expenses: 200 },
-  { name: 'Апр', expenses: 278 },
+  { name: 'Jan', expenses: 400 },
+  { name: 'Feb', expenses: 300 },
+  { name: 'Mar', expenses: 200 },
+  { name: 'Apr', expenses: 278 },
 ];
 
 export const Charts: React.FC = () => {

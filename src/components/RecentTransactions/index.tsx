@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TransactionModal } from '../TransactionModal';
 import './RecentTransactionsTable.css';
+import { useTransactionStore } from '../../store/transactionStore';
 
 type SplitItem = {
   category: string;
@@ -14,18 +15,8 @@ type Transaction = {
   split: SplitItem[];
 };
 
-type Props = {
-  transactions: Transaction[];
-  onUpdateTransaction?: (
-    index: number,
-    updatedTransaction: Transaction
-  ) => void;
-};
-
-export default function RecentTransactionsTable({
-  transactions,
-  onUpdateTransaction,
-}: Props) {
+export default function RecentTransactionsTable() {
+  const { transactions, updateTransaction } = useTransactionStore();
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -36,9 +27,10 @@ export default function RecentTransactionsTable({
   };
 
   const handleSave = (updatedTransaction: Transaction) => {
-    if (selectedIndex !== null && onUpdateTransaction) {
-      onUpdateTransaction(selectedIndex, updatedTransaction);
+    if (selectedIndex !== null) {
+      updateTransaction(selectedIndex, updatedTransaction);
     }
+    setSelectedTransaction(null);
   };
 
   return (

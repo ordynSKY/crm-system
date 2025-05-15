@@ -9,31 +9,31 @@ import { useState } from 'react';
 
 const departments = ['Finance', 'Tech', 'YouTube', 'Farm', 'Buyers'];
 
-const SelectDepartament = () => {
+type Props = {
+  onChange: (department: string) => void;
+};
+
+const SelectDepartament = ({ onChange }: Props) => {
   const [department, setDepartment] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setDepartment(event.target.value as string);
+    const value = event.target.value as string;
+    setDepartment(value);
+    onChange(value);
   };
 
   return (
     <FormControl fullWidth>
-      <InputLabel
-
-      // id="demo-simple-select-label"
-      >
-        Department
-      </InputLabel>
+      <InputLabel>Department</InputLabel>
       <Select
         sx={{
           borderRadius: '.5rem',
         }}
-        // labelId="demo-simple-select-label"
-        // id="demo-simple-select"
         value={department}
-        label="department"
+        label="Department"
         onChange={handleChange}
       >
+        <MenuItem value="">All Departments</MenuItem>
         {departments.map(item => (
           <MenuItem key={item} value={item}>
             {item}

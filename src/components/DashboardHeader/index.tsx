@@ -2,8 +2,14 @@ import { Box, Typography } from '@mui/material';
 import SelectDate from '../SelectDate';
 import SelectDepartament from '../SelectDepartament';
 import SelectUser from '../SelectUser';
+import { Dayjs } from 'dayjs';
 
-const DashboardHeader = () => {
+type Props = {
+  setSelectedDepartment: (department: string) => void;
+  setDateRange: (fromDate: Dayjs | null, toDate: Dayjs | null) => void;
+};
+
+const DashboardHeader = ({ setSelectedDepartment, setDateRange }: Props) => {
   return (
     <Box
       component="div"
@@ -41,10 +47,10 @@ const DashboardHeader = () => {
             gridColumn: '2 span',
           }}
         >
-          <SelectDate />
+          <SelectDate onChange={setDateRange} />
         </Box>
         <Box component="li">
-          <SelectDepartament />
+          <SelectDepartament onChange={setSelectedDepartment} />
         </Box>
         <Box component="li">
           <SelectUser />

@@ -8,7 +8,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { Dayjs } from 'dayjs';
 import { useTransactionStore } from '../../store/transactionStore';
+
+type Transaction = {
+  amount: number;
+  date: string;
+  department: string;
+};
 
 // Helper function to format date to "MMM YYYY" (e.g., "May 2025")
 const formatMonth = (dateStr: string) => {
@@ -17,9 +24,7 @@ const formatMonth = (dateStr: string) => {
 };
 
 // Helper function to aggregate transactions by month
-const aggregateExpensesByMonth = (
-  transactions: { amount: number; date: string }[]
-) => {
+const aggregateExpensesByMonth = (transactions: Transaction[]) => {
   const monthlyExpenses: { [key: string]: number } = {};
 
   transactions.forEach(tx => {
@@ -32,9 +37,28 @@ const aggregateExpensesByMonth = (
     .sort((a, b) => new Date(a.name).getTime() - new Date(b.name).getTime());
 };
 
-export const Charts: React.FC = () => {
+type Props = {
+  department: string;
+  fromDate: Dayjs | null;
+  toDate: Dayjs | null;
+};
+
+export const Charts: React.FC<Props> = ({ department, fromDate, toDate }) => {
   const { transactions } = useTransactionStore();
-  const data = aggregateExpensesByMonth(transactions);
+
+  // Filter transactions by department and date range
+  const filteredTransactions = transactions.filter((tx: any) => {
+    const matchesDepartment = department ? tx.department === department : true;
+    const txDate = new Date(tx.date);
+    const from = fromDate ? fromDate.startOf('day').toDate() : null;
+    const to = toDate ? toDate.endOf('day').toDate() : null;
+
+    const matchesDate = (!from || txDate >= from) && (!to || txDate <= to);
+
+    return matchesDepartment && matchesDate;
+  });
+
+  const data = aggregateExpensesByMonth(filteredTransactions);
 
   return (
     <div className="chart-container">

@@ -1,4 +1,11 @@
 import React, { useState } from 'react';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material';
 import './CreateTransactionForm.css';
 import { useTransactionStore } from '../../store/transactionStore';
 
@@ -12,6 +19,7 @@ type Transaction = {
   date: string;
   notes: string;
   split: SplitItem[];
+  department: string;
 };
 
 type CreateTransactionFormProps = {
@@ -19,7 +27,9 @@ type CreateTransactionFormProps = {
   onClose: () => void;
 };
 
-export default function CreateTransactionForm({
+const departments = ['Finance', 'Tech', 'YouTube', 'Farm', 'Buyers'];
+
+export function CreateTransactionForm({
   isOpen,
   onClose,
 }: CreateTransactionFormProps) {
@@ -32,6 +42,7 @@ export default function CreateTransactionForm({
   const [split, setSplit] = useState<SplitItem[]>([
     { category: '', amount: 0 },
   ]);
+  const [department, setDepartment] = useState('');
   const [error, setError] = useState<string>('');
 
   const addSplitItem = () => {
@@ -50,10 +61,16 @@ export default function CreateTransactionForm({
     setError('');
   };
 
+  const handleDepartmentChange = (event: SelectChangeEvent) => {
+    setDepartment(event.target.value as string);
+    setError('');
+  };
+
   const handleSave = () => {
     if (
       amount === '' ||
       !date ||
+      !department ||
       split.some(item => !item.category || item.amount <= 0)
     ) {
       setError('Заполните все поля');
@@ -65,12 +82,14 @@ export default function CreateTransactionForm({
       date,
       notes,
       split: split.filter(item => item.category && item.amount > 0),
+      department,
     };
     createTransaction(newTransaction);
     setAmount('');
     setDate(new Date().toISOString().split('T')[0]);
     setNotes('');
     setSplit([{ category: '', amount: 0 }]);
+    setDepartment('');
     setError('');
     onClose();
   };
@@ -121,6 +140,24 @@ export default function CreateTransactionForm({
               placeholder="Введите комментарий"
               className="input-field textarea"
             />
+          </div>
+
+          <div className="input-group">
+            <FormControl fullWidth>
+              <InputLabel>Department</InputLabel>
+              <Select
+                value={department}
+                label="Department"
+                onChange={handleDepartmentChange}
+                sx={{ borderRadius: '.5rem' }}
+              >
+                {departments.map(item => (
+                  <MenuItem key={item} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
 
           <div className="input-group">

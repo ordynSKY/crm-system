@@ -3,11 +3,15 @@ import DashboardHeader from '../../components/DashboardHeader';
 import { Charts } from '../../components/Charts';
 import RecentTransactionsTable from '../../components/RecentTransactions';
 import { useState } from 'react';
-import CreateTransactionForm from '../../components/CreateTransactionForm';
 import { TotalExpenses } from '../../components/TotalExpenses';
+import { CreateTransactionForm } from '../../components/CreateTransactionForm';
+import { Dayjs } from 'dayjs';
 
 const Dashboard = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [fromDate, setFromDate] = useState<Dayjs | null>(null);
+  const [toDate, setToDate] = useState<Dayjs | null>(null);
 
   return (
     <Container
@@ -22,14 +26,20 @@ const Dashboard = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: '2rem',
-          height: 100 + '%',
+          height: '100%',
           padding: '2rem',
           borderRadius: '1rem',
           backgroundColor: '#fff',
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <DashboardHeader />
+        <DashboardHeader
+          setSelectedDepartment={setSelectedDepartment}
+          setDateRange={(from, to) => {
+            setFromDate(from);
+            setToDate(to);
+          }}
+        />
         <Box
           component="ul"
           sx={{
@@ -75,7 +85,11 @@ const Dashboard = () => {
               backgroundColor: '#98E19C',
             }}
           >
-            <TotalExpenses />
+            <TotalExpenses
+              department={selectedDepartment}
+              fromDate={fromDate}
+              toDate={toDate}
+            />
           </Box>
           <Box
             component="li"
@@ -109,7 +123,11 @@ const Dashboard = () => {
           marginTop="20px"
           marginRight="10px"
         >
-          <Charts />
+          <Charts
+            department={selectedDepartment}
+            fromDate={fromDate}
+            toDate={toDate}
+          />
         </Box>
         <Box
           width="50%"
@@ -119,7 +137,11 @@ const Dashboard = () => {
           marginTop="20px"
           overflow="auto"
         >
-          <RecentTransactionsTable />
+          <RecentTransactionsTable
+            department={selectedDepartment}
+            fromDate={fromDate}
+            toDate={toDate}
+          />
           <CreateTransactionForm
             isOpen={isCreateModalOpen}
             onClose={() => setIsCreateModalOpen(false)}

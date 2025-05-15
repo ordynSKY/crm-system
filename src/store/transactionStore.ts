@@ -11,6 +11,7 @@ type Transaction = {
   date: string;
   notes: string;
   split: SplitItem[];
+  department: string;
 };
 
 type TransactionState = {
@@ -35,8 +36,24 @@ export const useTransactionStore = create<TransactionState>()(
         }),
     }),
     {
-      name: 'transaction-storage', // Key for localStorage
-      storage: createJSONStorage(() => localStorage), // Use localStorage
+      name: 'transaction-storage',
+      storage: createJSONStorage(() => localStorage),
+      migrate: (persistedState: any, version) => {
+        if (version === 0) {
+          // Add department to existing transactions
+          const updatedState = {
+            ...persistedState,
+            transactions: persistedState.transactions.map(
+              (tx: Transaction) => ({
+                ...tx,
+                department: tx.department || '',
+              })
+            ),
+          };
+          return updatedState;
+        }
+        return persistedState;
+      },
     }
   )
 );

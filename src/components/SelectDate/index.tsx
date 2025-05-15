@@ -5,28 +5,39 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 
-const SelectDate = () => {
-  const [fromDate, setFromDate] = useState<Dayjs | null>(dayjs());
-  const [toDate, setToDate] = useState<Dayjs | null>(dayjs());
+type Props = {
+  onChange: (fromDate: Dayjs | null, toDate: Dayjs | null) => void;
+};
 
-  console.log('formDate >', fromDate);
-  console.log('toDate >', toDate);
+const SelectDate = ({ onChange }: Props) => {
+  const [fromDate, setFromDate] = useState<Dayjs | null>(null);
+  const [toDate, setToDate] = useState<Dayjs | null>(null);
+
+  const handleFromDateChange = (newValue: Dayjs | null) => {
+    setFromDate(newValue);
+    onChange(newValue, toDate);
+  };
+
+  const handleToDateChange = (newValue: Dayjs | null) => {
+    setToDate(newValue);
+    onChange(fromDate, newValue);
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box sx={{ display: 'flex', gap: 2 }}>
+      <Box sx={{ display: 'flex', gap: 2, maxWidth: 400 }}>
         <DatePicker
-          label="Від"
+          label="From"
           value={fromDate}
           format="DD/MM/YYYY"
-          onChange={newValue => setFromDate(newValue)}
+          onChange={handleFromDateChange}
           slotProps={{ textField: { fullWidth: true } }}
         />
         <DatePicker
-          label="До"
+          label="To"
           value={toDate}
           format="DD/MM/YYYY"
-          onChange={newValue => setToDate(newValue)}
+          onChange={handleToDateChange}
           minDate={fromDate || undefined}
           slotProps={{ textField: { fullWidth: true } }}
         />

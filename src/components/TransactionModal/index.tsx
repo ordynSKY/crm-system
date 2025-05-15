@@ -63,7 +63,7 @@ export function TransactionModal({
           <div className="input-group">
             <label className="input-label">Amount</label>
             <div className="input-field input-field-readonly">
-              ₴{transaction.amount}
+              ${transaction.amount}
             </div>
           </div>
 

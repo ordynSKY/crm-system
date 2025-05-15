@@ -56,13 +56,13 @@ export default function RecentTransactionsTable() {
                 <td className="table-cell">
                   {new Date(tx.date).toLocaleDateString()}
                 </td>
-                <td className="table-cell">₴{tx.amount}</td>
+                <td className="table-cell">${tx.amount}</td>
                 <td className="table-cell">{tx.notes}</td>
                 <td className="table-cell">
                   <ul className="category-list">
                     {tx.split.map((item, i) => (
                       <li key={i}>
-                        {item.category}: ₴{item.amount}
+                        {item.category}: ${item.amount}
                       </li>
                     ))}
                   </ul>

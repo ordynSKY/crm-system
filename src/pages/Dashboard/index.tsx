@@ -36,7 +36,7 @@ const Dashboard = () => {
             padding: 0,
             listStyle: 'none',
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '1rem',
             borderRadius: '1rem',
           }}
@@ -90,22 +90,13 @@ const Dashboard = () => {
               backgroundColor: '#b298e1',
             }}
           >
-            Пункт 3
-          </Box>
-          <Box
-            component="li"
-            sx={{
-              borderRadius: '1rem',
-              padding: '1rem 1.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '1rem',
-              flexDirection: 'column',
-              backgroundColor: '#A9D6E6',
-            }}
-          >
-            Пункт 4
+            <Button
+              variant="outlined"
+              sx={{ color: 'white', borderColor: 'white' }}
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              Get report
+            </Button>
           </Box>
         </Box>
       </Box>

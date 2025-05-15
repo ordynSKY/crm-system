@@ -80,7 +80,7 @@ const Dashboard = () => {
           height: 100 + '%',
           padding: '2rem',
           borderRadius: '1rem',
-          backgroundColor: '#E7F3FA',
+          backgroundColor: '#fff',
           boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
         }}
       >
@@ -157,30 +157,30 @@ const Dashboard = () => {
             Пункт 4
           </Box>
         </Box>
-      </Box>
-      <Box display="flex" height="400px">
-        <Box
-          width="50%"
-          border="2px solid #dcd9d9"
-          borderRadius="5px"
-          padding="10px"
-          marginTop="20px"
-          marginRight="10px"
-        >
-          <Charts />
-        </Box>
-        <Box
-          width="50%"
-          border="2px solid #dcd9d9"
-          borderRadius="5px"
-          padding="10px"
-          marginTop="20px"
-          overflow="auto"
-        >
-          <RecentTransactionsTable
-            transactions={transactions}
-            onUpdateTransaction={handleUpdateTransaction}
-          />
+        <Box display="flex" height="400px">
+          <Box
+            width="50%"
+            border="2px solid #dcd9d9"
+            borderRadius="5px"
+            padding="10px"
+            marginTop="20px"
+            marginRight="10px"
+          >
+            <Charts />
+          </Box>
+          <Box
+            width="50%"
+            border="2px solid #dcd9d9"
+            borderRadius="5px"
+            padding="10px"
+            marginTop="20px"
+            overflow="auto"
+          >
+            <RecentTransactionsTable
+              transactions={transactions}
+              onUpdateTransaction={handleUpdateTransaction}
+            />
+          </Box>
         </Box>
       </Box>
     </Container>

@@ -1,57 +1,35 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
 import { useState } from 'react';
-
-const dates = [
-  '2023-05-14',
-  '2022-11-27',
-  '2024-03-02',
-  '2021-08-19',
-  '2022-02-10',
-  '2023-09-25',
-  '2020-12-31',
-  '2024-07-04',
-  '2021-01-15',
-  '2023-06-08',
-];
+import { Box, TextField } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 const SelectDate = () => {
-  const [date, setDate] = useState('');
+  const [fromDate, setFromDate] = useState<Dayjs | null>(dayjs());
+  const [toDate, setToDate] = useState<Dayjs | null>(dayjs());
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setDate(event.target.value as string);
-  };
+  console.log('formDate >', fromDate);
+  console.log('toDate >', toDate);
 
   return (
-    <FormControl fullWidth>
-      <InputLabel
-
-      // id="demo-simple-select-label"
-      >
-        Date
-      </InputLabel>
-      <Select
-        sx={{
-          borderRadius: '.5rem',
-        }}
-        // labelId="demo-simple-select-label"
-        // id="demo-simple-select"
-        value={date}
-        label="date"
-        onChange={handleChange}
-      >
-        {dates.map(item => (
-          <MenuItem key={item} value={item}>
-            {item}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <DatePicker
+          label="Від"
+          value={fromDate}
+          onChange={newValue => setFromDate(newValue)}
+          slotProps={{ textField: { fullWidth: true } }}
+        />
+        <DatePicker
+          label="До"
+          value={toDate}
+          onChange={newValue => setToDate(newValue)}
+          minDate={fromDate || undefined}
+          slotProps={{ textField: { fullWidth: true } }}
+        />
+      </Box>
+    </LocalizationProvider>
   );
 };
 

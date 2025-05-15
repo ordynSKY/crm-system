@@ -32,10 +32,15 @@ const DashboardHeader = () => {
           listStyle: 'none',
           display: 'grid',
           gap: '2rem',
-          gridTemplateColumns: 'repeat(3, minmax(8rem, 16rem))',
+          gridTemplateColumns: 'repeat(4, minmax(8rem, 12rem))',
         }}
       >
-        <Box component="li">
+        <Box
+          component="li"
+          sx={{
+            gridColumn: '2 span',
+          }}
+        >
           <SelectDate />
         </Box>
         <Box component="li">
